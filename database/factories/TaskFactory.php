@@ -23,6 +23,7 @@ class TaskFactory extends Factory
             'title' => fake()->sentence(),
             'description' => fake()->sentence(),
             'created_at' => now(),
+            'updated_at' => now(),
             'user_id' => User::factory()
         ];
     }

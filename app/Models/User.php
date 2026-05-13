@@ -12,9 +12,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 
-#[Fillable(['name', 'email'])]
+#[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password'])]
-#[Table(timestamps: false)]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

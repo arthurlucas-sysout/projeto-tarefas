@@ -62,7 +62,7 @@ class TaskController extends Controller
      */
     private function validation(Request $request): void
     {
-        $validated = $request->validate([
+        $request->validate([
             'title' => ['required', 'min:3', 'max:255'],
             'description' => ['required', 'min:3'],
             'user_id' => ['required', 'exists:App\Models\User,id'],

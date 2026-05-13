@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Validation\Rules\Password;
 
 /**
  * @author Arthur Lucas <arthur.lucas@sysout.com.br>
@@ -40,7 +41,7 @@ class UserController extends Controller
 
         $this-> validation($request);
 
-        $task->update($request->all());
+        $user->update($request->all());
     }
 
 
@@ -49,9 +50,32 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $user->delete($id);
+        $user->delete();
     }
 
+    /**
+     * Método para validar os dados recebidos pelo Json
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    private function validation(Request $request)
+    {
+        return $request->validate([
+            'name' => ['required', 'min:3', 'max:255'],
+            'email' => ['required', 'email:rfc', 'unique:users,email'],
+            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()]
+        ], [
+            'name.required' => 'O nome é obrigatório',
+            'name.min' => 'Nome inválido',
+            'name.max' => 'Nome inválido',
 
-    
+            'email.required' => 'O e-mail é obrigatório',
+            'email.email' => 'E-mail inválido',
+            'email.unique' => 'E-mail já cadastrado',
+
+            'password.required' => 'A senha é obrigatória'
+        ]);
+    }
 }

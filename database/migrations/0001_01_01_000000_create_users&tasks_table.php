@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->timestamps();
         });
 
         Schema::create('tasks', function(Blueprint $table) {
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->timestamps();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
         });
     }
 
